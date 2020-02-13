@@ -16,6 +16,7 @@ namespace ConsoleApp6
             switch (Do)
             {
                 case "1":
+                    Console.Clear();
                     quit = false;
                     break;
 
@@ -54,6 +55,8 @@ namespace ConsoleApp6
 
                 statlist.Add(new Stats(5, 5, 5, 5, 5));
 
+                Console.WriteLine("1. Fight");
+                Console.WriteLine("2. Stats");
                 String action = Console.ReadLine() + "";
 
                 switch (action)
@@ -66,17 +69,18 @@ namespace ConsoleApp6
                         Console.Clear();
                         for (int i = 0; i < statlist.Count; i++)
                         {
-                            Console.WriteLine("\n_____________________________________________________________________________");
                             Console.WriteLine("Str: " + statlist[i].Strength);
                             Console.WriteLine("Dex: " + statlist[i].Dexterity);
                             Console.WriteLine("Agi: " + statlist[i].Agility);
                             Console.WriteLine("Int: " + statlist[i].Inteligence);
                             Console.WriteLine("Luck: " + statlist[i].Luck);
+                            Console.WriteLine("\n_____________________________________________________________________________");
                         }
+
                         Console.WriteLine("\n1. Add");
                         Console.WriteLine("2. Return");
-
-
+                        string statsmenu_action = Console.ReadLine() + "";
+                        
 
                         Console.ReadKey();
                         break;
