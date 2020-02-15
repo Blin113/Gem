@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ConsoleApp6
@@ -7,6 +7,29 @@ namespace ConsoleApp6
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Clear();
+            Console.Title = "Gem by Blin";
+            string title = @"
+
+ ________  _______   _____ ______           ________      ___    ___      ________  ___       ___  ________      
+|\   ____\|\  ___ \ |\   _ \  _   \        |\   __  \    |\  \  /  /|    |\   __  \|\  \     |\  \|\   ___  \    
+\ \  \___|\ \   __/|\ \  \\\__\ \  \       \ \  \|\ /_   \ \  \/  / /    \ \  \|\ /\ \  \    \ \  \ \  \\ \  \   
+ \ \  \  __\ \  \_|/_\ \  \\|__| \  \       \ \   __  \   \ \    / /      \ \   __  \ \  \    \ \  \ \  \\ \  \  
+  \ \  \|\  \ \  \_|\ \ \  \    \ \  \       \ \  \|\  \   \/  /  /        \ \  \|\  \ \  \____\ \  \ \  \\ \  \ 
+   \ \_______\ \_______\ \__\    \ \__\       \ \_______\__/  / /           \ \_______\ \_______\ \__\ \__\\ \__\
+    \|_______|\|_______|\|__|     \|__|        \|_______|\___/ /             \|_______|\|_______|\|__|\|__| \|__|
+                                                
+                                            Press any key to start
+            ";
+
+
+            Console.WriteLine(title);
+            Console.ReadKey();
+            Console.ResetColor();
+
+            Console.Clear();
             bool quit = true;
 
             Console.WriteLine("1. Play");
@@ -48,28 +71,55 @@ namespace ConsoleApp6
                     Main(null);
                     break;
             }
-            
+
             List<Stats> statlist = new List<Stats>();
 
-            Random random = new Random();
-            statlist.Add(new Stats(5, 5, 5, 5, 5, 0));
+            Random random = new Random();       
+            statlist.Add(new Stats(5, 5, 5, 5, 5, 0));      //player stats
             String Player = statlist[0] + "";
 
-            while (!quit)
+            while (!quit)       //actual game
             {
+                Console.Clear();
                 Console.WriteLine("1. Fight");
                 Console.WriteLine("2. Stats");
+                Console.WriteLine("3. Exit");
                 String action = Console.ReadLine() + "";
 
                 switch (action)
                 {
                     case "1":   //Fight
-                        int ES = random.Next(1, 10);
+                        int ES = random.Next(1, 10);    //enemy stats
                         int ED = random.Next(1, 10);
                         int EA = random.Next(1, 10);
                         int EI = random.Next(1, 10);
                         int EL = random.Next(1, 10);
-                        statlist.Add(new Stats(ES, ED, EA, EI, EL, 0));
+                        statlist.Add(new Stats(ES, ED, EA, EI, EL, 0));     //enemy stats
+
+                        Console.Clear();
+                        Console.WriteLine(Oponent());
+                        Console.WriteLine("----------------------------------");
+                        Console.WriteLine("1. Fight");
+                        Console.WriteLine("2. Run");
+                        Console.WriteLine("3. Items(WIP)");     //Add after u git gud
+                        String Fightoptions = Console.ReadLine() + "";
+                        switch (Fightoptions)
+                        {
+                            case "1":
+                                //Fighting code
+                                break;
+
+                            case "2":
+                                Console.WriteLine("Oponent: COWARD!!!");
+                                Console.ReadKey();
+                                break;
+
+                            default:
+                                Console.WriteLine("Invalid option, press any key to continue");
+                                break;
+                        }
+
+                        
                         break;
 
                     case "2":   //Player stats
@@ -98,7 +148,7 @@ namespace ConsoleApp6
                             Console.WriteLine("_____________________________________________________________________________");
                             Console.WriteLine("Pts: " + statlist[0].Statpoints);
 
-                            String add = Console.ReadLine() + "";
+                            String add = Console.ReadLine() + "";       //add to stats from statpoints
                             if (add == "1")
                             {
                                 int ammount = int.Parse(Console.ReadLine());
@@ -111,20 +161,113 @@ namespace ConsoleApp6
                                     Console.WriteLine("Invalid command!");
                                     break;
                                 }
-                                    
-                        }
-                        
 
+                            }
+                            else if (add == "2")
+                            {
+                                int ammount = int.Parse(Console.ReadLine());
+                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                {
+                                    statlist[0].Dexterity += ammount;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Invalid command!");
+                                    break;
+                                }
+
+                            }
+                            else if (add == "3")
+                            {
+                                int ammount = int.Parse(Console.ReadLine());
+                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                {
+                                    statlist[0].Agility += ammount;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Invalid command!");
+                                    break;
+                                }
+
+                            }
+                            else if (add == "4")
+                            {
+                                int ammount = int.Parse(Console.ReadLine());
+                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                {
+                                    statlist[0].Inteligence += ammount;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Invalid command!");
+                                    break;
+                                }
+
+                            }
+                            else if (add == "5")
+                            {
+                                int ammount = int.Parse(Console.ReadLine());
+                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                {
+                                    statlist[0].Luck += ammount;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Invalid command!");
+                                    break;
+                                }
+
+                            }
+
+                        }
                         Console.ReadKey();
                         break;
+
+                    case "3":       //Quit game
+                        Console.Clear();
+                        Console.WriteLine("Exit? (Y/N)");
+                        string QT = Console.ReadLine().ToLower();
+                        if (QT == "y")
+                        {
+                            Console.Clear();
+                            Main(null);
+                            break;
+                        }
+                        else if (QT == "n")
+                        {
+                            Console.Clear();
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Command, press any key to contionue");
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        }
 
                     default:
                         Console.WriteLine("Invalid command, press any key to continue");
                         Console.ReadKey();
-                        
                         break;
                 }
             }
+        }
+
+        static string Oponent()
+        {
+            Random random = new Random();
+
+            List<String> O = new List<string>();
+            O.Add("A wild Hooligan has appeared");
+            O.Add("A wild Bird has appeared");
+            O.Add("A wild Bela has appeared");
+            O.Add("A wild Assasin has appeared");
+
+            int index = random.Next(0, O.Count);
+
+            return O[index];
         }
     }
 }

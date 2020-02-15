@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -111,7 +111,8 @@ namespace ConsoleApp6
         public int Statpoints
         {
             get { return statpoints; }
-            set { 
+            set
+            {
                 if (value < 0)
                 {
                     Console.WriteLine("Invalid input");
