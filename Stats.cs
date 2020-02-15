@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,14 +11,16 @@ namespace ConsoleApp6
         private int agility;
         private int inteligence;
         private int luck;
+        private int statpoints;
 
-        public Stats(int Str, int Dex, int Agi, int Int, int Luc)
+        public Stats(int Str, int Dex, int Agi, int Int, int Luc, int Pts)
         {
             strength = Str;
             dexterity = Dex;
             agility = Agi;
             inteligence = Int;
             luck = Luc;
+            statpoints = Pts;
         }
 
         public int Strength
@@ -102,6 +104,22 @@ namespace ConsoleApp6
                 else
                 {
                     luck = value;
+                }
+            }
+        }
+
+        public int Statpoints
+        {
+            get { return statpoints; }
+            set { 
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid input");
+                    statpoints = 0;
+                }
+                else
+                {
+                    statpoints = value;
                 }
             }
         }
