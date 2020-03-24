@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp6
+namespace Gem
 {
     class Stats
     {
+        private int health;
         private int strength;
         private int dexterity;
         private int agility;
@@ -13,14 +14,32 @@ namespace ConsoleApp6
         private int luck;
         private int statpoints;
 
-        public Stats(int Str, int Dex, int Agi, int Int, int Luc, int Pts)
+        public Stats(int Hp, int Str, int Dex, int Agi, int Int, int Luc, int Pts)
         {
+            health = Hp;
             strength = Str;
             dexterity = Dex;
             agility = Agi;
             inteligence = Int;
             luck = Luc;
             statpoints = Pts;
+        }
+
+        public int Health
+        {
+            get { return health; }
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid input");
+                    health = 0;
+                }
+                else
+                {
+                    strength = value;
+                }
+            }
         }
 
         public int Strength
@@ -121,6 +140,33 @@ namespace ConsoleApp6
                 else
                 {
                     statpoints = value;
+                }
+            }
+        }
+    }
+
+    class Level
+    {
+        private int level;
+
+        public Level(int Xp)
+        {
+            level = Xp;
+        }
+
+        public int Level
+        {
+            get { return level; }
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid input");
+                    level = 0;
+                }
+                else
+                {
+                    level = value;
                 }
             }
         }

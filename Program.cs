@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ConsoleApp6
+namespace Gem
 {
     class Program
     {
@@ -27,7 +27,7 @@ namespace ConsoleApp6
 
             Console.WriteLine(title);
             Console.ReadKey();
-            Console.ResetColor();
+            //Console.ResetColor();
 
             Console.Clear();
             bool quit = true;
@@ -58,7 +58,9 @@ namespace ConsoleApp6
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("Invalid Command, press any key to contionue");
+                        Console.ForegroundColor = ConsoleColor.Black;
                         Console.ReadKey();
                         Console.Clear();
                         Main(null);
@@ -66,17 +68,20 @@ namespace ConsoleApp6
                     break;
 
                 default:
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Invalid Command, press any key to contionue");
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.ReadKey();
                     Main(null);
                     break;
             }
 
-            List<Stats> statlist = new List<Stats>();
-
-            Random random = new Random();       
-            statlist.Add(new Stats(5, 5, 5, 5, 5, 0));      //player stats
+            List<Character> entity = new List<Character>();
+    
+            entity.Add(new Player(new Character(10, 5, 5, 5, 5, 5, 10)));      //player stats
             String Player = statlist[0] + "";
+
+            Player = &entity[0];
 
             while (!quit)       //actual game
             {
@@ -89,15 +94,10 @@ namespace ConsoleApp6
                 switch (action)
                 {
                     case "1":   //Fight
-                        int ES = random.Next(1, 10);    //enemy stats
-                        int ED = random.Next(1, 10);
-                        int EA = random.Next(1, 10);
-                        int EI = random.Next(1, 10);
-                        int EL = random.Next(1, 10);
-                        statlist.Add(new Stats(ES, ED, EA, EI, EL, 0));     //enemy stats
-
                         Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine(Oponent());
+                        Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine("----------------------------------");
                         Console.WriteLine("1. Fight");
                         Console.WriteLine("2. Run");
@@ -110,21 +110,23 @@ namespace ConsoleApp6
                                 break;
 
                             case "2":
-                                Console.WriteLine("Oponent: COWARD!!!");
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                Console.WriteLine("Opponent: COWARD!!!");
+                                Console.ForegroundColor = ConsoleColor.Black;
                                 Console.ReadKey();
                                 break;
 
                             default:
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
                                 Console.WriteLine("Invalid option, press any key to continue");
+                                Console.ForegroundColor = ConsoleColor.Black;
                                 break;
                         }
-
-                        
                         break;
 
                     case "2":   //Player stats
                         Console.Clear();
-
+                        Console.WriteLine("Str: " + statlist[0].Health);
                         Console.WriteLine("Str: " + statlist[0].Strength);
                         Console.WriteLine("Dex: " + statlist[0].Dexterity);
                         Console.WriteLine("Agi: " + statlist[0].Agility);
@@ -137,91 +139,118 @@ namespace ConsoleApp6
                         Console.WriteLine("Press any other button to return");
                         string statsmenu_action = Console.ReadLine() + "";
 
-                        if (statsmenu_action == "1")
+                        switch (statsmenu_action)
                         {
-                            Console.Clear();
-                            Console.WriteLine("1. Str: " + statlist[0].Strength);
-                            Console.WriteLine("2. Dex: " + statlist[0].Dexterity);
-                            Console.WriteLine("3. Agi: " + statlist[0].Agility);
-                            Console.WriteLine("4. Int: " + statlist[0].Inteligence);
-                            Console.WriteLine("5. Luck: " + statlist[0].Luck);
-                            Console.WriteLine("_____________________________________________________________________________");
-                            Console.WriteLine("Pts: " + statlist[0].Statpoints);
+                            case "1":
+                                Console.Clear();
+                                Console.WriteLine("1. Str: " + statlist[0].Strength);
+                                Console.WriteLine("2. Dex: " + statlist[0].Dexterity);
+                                Console.WriteLine("3. Agi: " + statlist[0].Agility);
+                                Console.WriteLine("4. Int: " + statlist[0].Inteligence);
+                                Console.WriteLine("5. Luck: " + statlist[0].Luck);
+                                Console.WriteLine("_____________________________________________________________________________");
+                                Console.WriteLine("Pts: " + statlist[0].Statpoints);
 
-                            String add = Console.ReadLine() + "";       //add to stats from statpoints
-                            if (add == "1")
-                            {
-                                int ammount = int.Parse(Console.ReadLine());
-                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                String add = Console.ReadLine() + "";       //add to stats from statpoints
+                                switch (add)
                                 {
-                                    statlist[0].Strength += ammount;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Invalid command!");
-                                    break;
-                                }
+                                    case "1":
+                                        Console.WriteLine("How much do you want to put into strenght?");
+                                        int ammount = int.Parse(Console.ReadLine());
+                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        {
+                                            statlist[0].Strength += ammount;
+                                            statlist[0].Statpoints -= ammount;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("No can do");
+                                            Console.ReadKey();
+                                            break;
+                                        }
 
-                            }
-                            else if (add == "2")
-                            {
-                                int ammount = int.Parse(Console.ReadLine());
-                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
-                                {
-                                    statlist[0].Dexterity += ammount;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Invalid command!");
-                                    break;
-                                }
 
-                            }
-                            else if (add == "3")
-                            {
-                                int ammount = int.Parse(Console.ReadLine());
-                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
-                                {
-                                    statlist[0].Agility += ammount;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Invalid command!");
-                                    break;
-                                }
+                                    case "2":
+                                        Console.WriteLine("How much do you want to put into dexterity?");
+                                        ammount = int.Parse(Console.ReadLine());
+                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        {
+                                            statlist[0].Dexterity += ammount;
+                                            statlist[0].Statpoints -= ammount;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("No can do");
+                                            Console.ReadKey();
+                                            break;
+                                        }
 
-                            }
-                            else if (add == "4")
-                            {
-                                int ammount = int.Parse(Console.ReadLine());
-                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
-                                {
-                                    statlist[0].Inteligence += ammount;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Invalid command!");
-                                    break;
-                                }
+                                    case "3":
+                                        Console.WriteLine("How much do you want to put into agility?");
+                                        ammount = int.Parse(Console.ReadLine());
+                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        {
+                                            statlist[0].Agility += ammount;
+                                            statlist[0].Statpoints -= ammount;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("No can do");
+                                            Console.ReadKey();
+                                            break;
+                                        }
 
-                            }
-                            else if (add == "5")
-                            {
-                                int ammount = int.Parse(Console.ReadLine());
-                                if (ammount <= statlist[0].Statpoints && ammount >= 0)
-                                {
-                                    statlist[0].Luck += ammount;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Invalid command!");
-                                    break;
-                                }
+                                    case "4":
+                                        Console.WriteLine("How much do you want to put into inteligence?");
+                                        ammount = int.Parse(Console.ReadLine());
+                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        {
+                                            statlist[0].Inteligence += ammount;
+                                            statlist[0].Statpoints -= ammount;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("No can do");
+                                            Console.ReadKey();
+                                            break;
+                                        }
 
-                            }
+                                    case "5":
+                                        Console.WriteLine("How much do you want to put into luck?");
+                                        ammount = int.Parse(Console.ReadLine());
+                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        {
+                                            statlist[0].Luck += ammount;
+                                            statlist[0].Statpoints -= ammount;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("No can do");
+                                            Console.ReadKey();
+                                            break;
+                                        }
 
+                                    default:
+                                        Console.WriteLine("No can do");
+                                        Console.ReadKey();
+                                        break;
+                                }
+                                break;
+
+
+                            default:
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                Console.WriteLine("Invalid Command, press any key to contionue");
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.ReadKey();
+                                Console.Clear();
+                                break;
                         }
-                        Console.ReadKey();
                         break;
 
                     case "3":       //Quit game
@@ -241,14 +270,18 @@ namespace ConsoleApp6
                         }
                         else
                         {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
                             Console.WriteLine("Invalid Command, press any key to contionue");
+                            Console.ForegroundColor = ConsoleColor.Black;
                             Console.ReadKey();
                             Console.Clear();
-                            break;
                         }
+                        break;      
 
                     default:
-                        Console.WriteLine("Invalid command, press any key to continue");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("Invalid Command, press any key to contionue");
+                        Console.ForegroundColor = ConsoleColor.Black;
                         Console.ReadKey();
                         break;
                 }
@@ -257,17 +290,7 @@ namespace ConsoleApp6
 
         static string Oponent()
         {
-            Random random = new Random();
-
-            List<String> O = new List<string>();
-            O.Add("A wild Hooligan has appeared");
-            O.Add("A wild Bird has appeared");
-            O.Add("A wild Bela has appeared");
-            O.Add("A wild Assasin has appeared");
-
-            int index = random.Next(0, O.Count);
-
-            return O[index];
+            List<Opponents> opponent = new List<Opponents>();
         }
     }
 }
