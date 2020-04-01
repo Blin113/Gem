@@ -4,27 +4,11 @@ using System.Text;
 
 namespace Gem
 {
-    class Character
+    class Character : Stats
     {
-        private Stats stats;
-        private Level level;
-
-        public Character(stats stats, Player player)
+        public Character(int Hp, int Str, int Dex, int Agi, int Int, int Luc, int Pts, int Lvl, int Xp, float atk, float def, float ddg, float crit) : base(Hp, Str, Dex, Agi, Int, Luc, Pts, Lvl, Xp, atk, def, ddg, crit)
         {
-            this.stats = stats;
-            this.player = player;
-        }
 
-        public Stats stats
-        {
-            get { return stats; }
-            set { stats = value; }
-        }
-
-        public Level level
-        {
-            get { return level; }
-            set { level = value; }
         }
     }
 }

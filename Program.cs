@@ -22,6 +22,8 @@ namespace Gem
     \|_______|\|_______|\|__|     \|__|        \|_______|\___/ /             \|_______|\|_______|\|__|\|__| \|__|
                                                 
                                             Press any key to start
+
+                                                     1337
             ";
 
 
@@ -76,13 +78,13 @@ namespace Gem
                     break;
             }
 
+            var instance = new Stats();
+            instance.StatsAssembly();
+
             List<Character> entity = new List<Character>();
-    
-            entity.Add(new Player(new Character(10, 5, 5, 5, 5, 5, 10)));      //player stats
-            String Player = statlist[0] + "";
 
-            Player = &entity[0];
-
+            entity.Add(new Player(10, 5, 5, 5, 5, 5, 10, 1, 0));      //player stats
+            
             while (!quit)       //actual game
             {
                 Console.Clear();
@@ -96,7 +98,7 @@ namespace Gem
                     case "1":   //Fight
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine(Oponent());
+                        Console.WriteLine(OpponentPhrase());
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine("----------------------------------");
                         Console.WriteLine("1. Fight");
@@ -106,7 +108,10 @@ namespace Gem
                         switch (Fightoptions)
                         {
                             case "1":
-                                //Fighting code
+                                Fight();
+
+                                var instance = new Stats();
+                                instance.CheckLevelUp();
                                 break;
 
                             case "2":
@@ -124,16 +129,17 @@ namespace Gem
                         }
                         break;
 
-                    case "2":   //Player stats
+                    case "2":   //Player stats      Stat config
                         Console.Clear();
-                        Console.WriteLine("Str: " + statlist[0].Health);
-                        Console.WriteLine("Str: " + statlist[0].Strength);
-                        Console.WriteLine("Dex: " + statlist[0].Dexterity);
-                        Console.WriteLine("Agi: " + statlist[0].Agility);
-                        Console.WriteLine("Int: " + statlist[0].Inteligence);
-                        Console.WriteLine("Luck: " + statlist[0].Luck);
+                        Console.WriteLine("Str: " + entity[0].Health);
+                        Console.WriteLine("Str: " + entity[0].Strength);
+                        Console.WriteLine("Dex: " + entity[0].Dexterity);
+                        Console.WriteLine("Agi: " + entity[0].Agility);
+                        Console.WriteLine("Int: " + entity[0].Inteligence);
+                        Console.WriteLine("Luck: " + entity[0].Luck);
                         Console.WriteLine("_____________________________________________________________________________");
-                        Console.WriteLine("Pts: " + statlist[0].Statpoints);
+                        Console.WriteLine("Lvl: " + entity[0].Level);
+                        Console.WriteLine("Pts: " + entity[0].Statpoints);
 
                         Console.WriteLine("\n1. Add");
                         Console.WriteLine("Press any other button to return");
@@ -143,13 +149,13 @@ namespace Gem
                         {
                             case "1":
                                 Console.Clear();
-                                Console.WriteLine("1. Str: " + statlist[0].Strength);
-                                Console.WriteLine("2. Dex: " + statlist[0].Dexterity);
-                                Console.WriteLine("3. Agi: " + statlist[0].Agility);
-                                Console.WriteLine("4. Int: " + statlist[0].Inteligence);
-                                Console.WriteLine("5. Luck: " + statlist[0].Luck);
+                                Console.WriteLine("1. Str: " + entity[0].Strength);
+                                Console.WriteLine("2. Dex: " + entity[0].Dexterity);
+                                Console.WriteLine("3. Agi: " + entity[0].Agility);
+                                Console.WriteLine("4. Int: " + entity[0].Inteligence);
+                                Console.WriteLine("5. Luck: " + entity[0].Luck);
                                 Console.WriteLine("_____________________________________________________________________________");
-                                Console.WriteLine("Pts: " + statlist[0].Statpoints);
+                                Console.WriteLine("Pts: " + entity[0].Statpoints);
 
                                 String add = Console.ReadLine() + "";       //add to stats from statpoints
                                 switch (add)
@@ -157,10 +163,10 @@ namespace Gem
                                     case "1":
                                         Console.WriteLine("How much do you want to put into strenght?");
                                         int ammount = int.Parse(Console.ReadLine());
-                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        if (ammount <= entity[0].Statpoints && ammount >= 0)
                                         {
-                                            statlist[0].Strength += ammount;
-                                            statlist[0].Statpoints -= ammount;
+                                            entity[0].Strength += ammount;
+                                            entity[0].Statpoints -= ammount;
                                             break;
                                         }
                                         else
@@ -174,10 +180,10 @@ namespace Gem
                                     case "2":
                                         Console.WriteLine("How much do you want to put into dexterity?");
                                         ammount = int.Parse(Console.ReadLine());
-                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        if (ammount <= entity[0].Statpoints && ammount >= 0)
                                         {
-                                            statlist[0].Dexterity += ammount;
-                                            statlist[0].Statpoints -= ammount;
+                                            entity[0].Dexterity += ammount;
+                                            entity[0].Statpoints -= ammount;
                                             break;
                                         }
                                         else
@@ -190,10 +196,10 @@ namespace Gem
                                     case "3":
                                         Console.WriteLine("How much do you want to put into agility?");
                                         ammount = int.Parse(Console.ReadLine());
-                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        if (ammount <= entity[0].Statpoints && ammount >= 0)
                                         {
-                                            statlist[0].Agility += ammount;
-                                            statlist[0].Statpoints -= ammount;
+                                            entity[0].Agility += ammount;
+                                            entity[0].Statpoints -= ammount;
                                             break;
                                         }
                                         else
@@ -206,10 +212,10 @@ namespace Gem
                                     case "4":
                                         Console.WriteLine("How much do you want to put into inteligence?");
                                         ammount = int.Parse(Console.ReadLine());
-                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        if (ammount <= entity[0].Statpoints && ammount >= 0)
                                         {
-                                            statlist[0].Inteligence += ammount;
-                                            statlist[0].Statpoints -= ammount;
+                                            entity[0].Inteligence += ammount;
+                                            entity[0].Statpoints -= ammount;
                                             break;
                                         }
                                         else
@@ -222,10 +228,10 @@ namespace Gem
                                     case "5":
                                         Console.WriteLine("How much do you want to put into luck?");
                                         ammount = int.Parse(Console.ReadLine());
-                                        if (ammount <= statlist[0].Statpoints && ammount >= 0)
+                                        if (ammount <= entity[0].Statpoints && ammount >= 0)
                                         {
-                                            statlist[0].Luck += ammount;
-                                            statlist[0].Statpoints -= ammount;
+                                            entity[0].Luck += ammount;
+                                            entity[0].Statpoints -= ammount;
                                             break;
                                         }
                                         else
@@ -244,16 +250,12 @@ namespace Gem
 
 
                             default:
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine("Invalid Command, press any key to contionue");
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.ReadKey();
                                 Console.Clear();
                                 break;
                         }
                         break;
 
-                    case "3":       //Quit game
+                    case "3":       //Quit game?
                         Console.Clear();
                         Console.WriteLine("Exit? (Y/N)");
                         string QT = Console.ReadLine().ToLower();
@@ -288,9 +290,39 @@ namespace Gem
             }
         }
 
-        static string Oponent()
+        static void Opponent(ref List<Character> entity)    //Enemy creation
         {
-            List<Opponents> opponent = new List<Opponents>();
+            entity.Remove(entity[1]);
+            Random random = new Random();
+
+            
+
+            entity.Add(new Opponents(10, 5, 5, 5, 5, 5, 10, 1, 0));
+        }
+
+        static String OpponentPhrase()          //returns a phrase for the epicness of the battle
+        {
+            Random random = new Random();
+
+            List<String> Ep = new List<string>();       //Enemy phrase
+            Ep.Add("A wild gardener has appeared");
+            Ep.Add("A wild bird has appeared");
+            Ep.Add("A wild painter has appeared");
+            Ep.Add("A wild god has appeared");
+            Ep.Add("A wild punk has appeared");
+            Ep.Add("A wild worker has appeared");
+            Ep.Add("A wild Bela has appeared");
+            Ep.Add("A wild firi has appeared");
+            Ep.Add("A wild ... has appeared");
+
+            int i = random.Next(0, Ep.Count);
+
+            return Ep[i];
+        }
+
+        static void Fight()
+        {
+
         }
     }
 }
