@@ -57,7 +57,7 @@ namespace Gem
                 }
                 else
                 {
-                    strength = value;
+                    health = value;
                 }
             }
         }
@@ -198,6 +198,82 @@ namespace Gem
             }
         }
 
+        public float Attack     //"summarise" stats to this value
+        {
+            get { return attack; }
+            set
+            {
+
+
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid stats, attack cannot be lower than 0. please restart your game.");
+                    attack = 0;
+                }
+                else
+                {
+                    attack = value;
+                }
+            }
+        }
+
+        public float Defence     //"summarise" stats to this value
+        {
+            get { return defence; }
+            set
+            {
+
+
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid stats, defence cannot be lower than 0. please restart your game.");
+                    defence = 0;
+                }
+                else
+                {
+                    defence = value;
+                }
+            }
+        }
+
+        public float Dodge     //"summarise" stats to this value
+        {
+            get { return dodge; }
+            set
+            {
+
+
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid stats, dodge cannot be lower than 0. please restart your game.");
+                    dodge = 0;
+                }
+                else
+                {
+                    dodge = value;
+                }
+            }
+        }
+
+        public float CriticalStrike     //"summarise" stats to this value
+        {
+            get { return criticalstrike; }
+            set
+            {
+
+
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid stats, Crit cannot be lower than 0. please restart your game.");
+                    criticalstrike = 0;
+                }
+                else
+                {
+                    criticalstrike = value;
+                }
+            }
+        }
+
         public void CheckLevelUp()
         {
             if (experiencePoints >= XpCap)
@@ -211,9 +287,9 @@ namespace Gem
             }
         }
 
-        public int StatsAssembly()
+        public float StatsAssembly()      //return atk, def, dodge and crit to program.cs for Fight();
         {
-            get{ return attack defence dodge criticalstrike; }
+            return 0;
         }
     }
 }
