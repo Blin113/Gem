@@ -61,7 +61,7 @@ namespace Gem
                     switch (Load)
                     {
                         case "1":
-                            if (is1Avaliable)
+                            if (is1Avaliable)       //kollar om filen save 1 existerar om inte skapar vi en ny senare när vi sparar spelet.
                             {
                                 if (entity.Count > 0)
                                 {
@@ -82,7 +82,7 @@ namespace Gem
                             }
 
                         case "2":
-                            if (is2Avaliable)
+                            if (is2Avaliable)       //kollar om filen save 2 existerar om inte skapar vi en ny senare när vi sparar spelet.
                             {
                                 if (entity.Count >= 0)
                                 {
@@ -104,7 +104,7 @@ namespace Gem
                             }
 
                         case "3":
-                            if (is3Avaliable)
+                            if (is3Avaliable)       //kollar om filen save 3 existerar om inte skapar vi en ny senare när vi sparar spelet.
                             {
                                 if (entity.Count >= 0)
                                 {
@@ -126,14 +126,15 @@ namespace Gem
                             }
 
                         default:
-                            Console.WriteLine("Invalid Save File");
+                            Console.WriteLine("Invalid Save File");     //användaren skrev fel
                             Console.ReadKey();
                             Console.Clear();
+                            Main(null);
                             break;
                             
                     }
 
-                    //Console.Clear();
+                    Console.Clear();
                     quit = false;
                     break;
 
@@ -179,7 +180,7 @@ namespace Gem
                 Console.WriteLine("1. Fight");
                 Console.WriteLine("2. Stats");
                 Console.WriteLine("3. Exit");
-                String action = Console.ReadLine() + "";
+                string action = Console.ReadLine() + "";
 
                 switch (action)
                 {
@@ -192,7 +193,7 @@ namespace Gem
                         Console.WriteLine("1. Fight");
                         Console.WriteLine("2. Run");
                         Console.WriteLine("3. Items(WIP)");     //Add after u git gud
-                        String Fightoptions = Console.ReadLine() + "";
+                        string Fightoptions = Console.ReadLine() + "";
                         switch (Fightoptions)
                         {
                             case "1":
@@ -244,7 +245,7 @@ namespace Gem
                                 Console.WriteLine("_____________________________________________________________________________");
                                 Console.WriteLine("Pts: " + entity[0].Statpoints);
 
-                                String add = Console.ReadLine() + "";       //add to stats from statpoints
+                                string add = Console.ReadLine() + "";       //add to stats from statpoints
                                 switch (add)
                                 {
                                     case "1":
@@ -410,11 +411,11 @@ namespace Gem
             entity.Add(new Opponents(10, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
         }
 
-        static String OpponentPhrase()          //returns a phrase for the epicness of the battle
+        static string OpponentPhrase()          //returns a phrase for the epicness of the battle
         {
             Random random = new Random();
 
-            List<String> Ep = new List<string>();       //Enemy phrase
+            List<string> Ep = new List<string>();       //Enemy phrase
             Ep.Add("A wild gardener has appeared");
             Ep.Add("A wild bird has appeared");
             Ep.Add("A wild painter has appeared");
