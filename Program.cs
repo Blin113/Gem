@@ -56,20 +56,29 @@ namespace Gem
                     Console.WriteLine(is3Avaliable ? "3. Load save 3" : "3. Empty slot");
 
                     Load = Console.ReadLine().Trim();
-                    
 
                     switch (Load)
                     {
                         case "1":
-                            if (is1Avaliable)       //kollar om filen save 1 existerar om inte skapar vi en ny senare när vi sparar spelet.
+                            if (is1Avaliable)       //kollar om filen save 1 existerar, om inte skapar vi en ny senare när vi sparar spelet.
                             {
-                                if (entity.Count > 0)
+                                if (entity.Count == 0)
                                 {
-                                    entity.Remove(entity[0]);
+                                    entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                                    entity[0].LoadFromFile(@"./save1.txt");
+                                    break;
                                 }
 
-                                entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-                                entity[0].LoadFromFile(@"./save1.txt");
+                                for (int i = 0; i < entity.Count; i++)
+                                {
+                                    if (entity[i] is Player)
+                                    {
+                                        entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                                        entity[0].LoadFromFile(@"./save1.txt");
+                                    }
+                                        
+                                }
+
                                 Console.Clear();
                                 break;
                             }
@@ -82,16 +91,25 @@ namespace Gem
                             }
 
                         case "2":
-                            if (is2Avaliable)       //kollar om filen save 2 existerar om inte skapar vi en ny senare när vi sparar spelet.
+                            if (is2Avaliable)       //kollar om filen save 2 existerar, om inte skapar vi en ny senare när vi sparar spelet.
                             {
-                                if (entity.Count >= 0)
+                                if (entity.Count == 0)
                                 {
-                                    entity.Remove(entity[0]);
+                                    entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                                    entity[0].LoadFromFile(@"./save2.txt");
+                                    break;
                                 }
 
-                                entity.Remove(entity[0]);
-                                entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-                                entity[0].LoadFromFile(@"./save2.txt");
+                                for (int i = 0; i < entity.Count; i++)
+                                {
+                                    if (entity[i] is Player)
+                                    {
+                                        entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                                        entity[0].LoadFromFile(@"./save2.txt");
+                                    }
+
+                                }
+
                                 Console.Clear();
                                 break;
                             }
@@ -104,16 +122,25 @@ namespace Gem
                             }
 
                         case "3":
-                            if (is3Avaliable)       //kollar om filen save 3 existerar om inte skapar vi en ny senare när vi sparar spelet.
+                            if (is3Avaliable)       //kollar om filen save 3 existerar, om inte skapar vi en ny senare när vi sparar spelet.
                             {
-                                if (entity.Count >= 0)
+                                if (entity.Count == 0)
                                 {
-                                    entity.Remove(entity[0]);
+                                    entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                                    entity[0].LoadFromFile(@"./save3.txt");
+                                    break;
                                 }
 
-                                entity.Remove(entity[0]);
-                                entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-                                entity[0].LoadFromFile(@"./save3.txt");
+                                for (int i = 0; i < entity.Count; i++)
+                                {
+                                    if (entity[i] is Player)
+                                    {
+                                        entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                                        entity[0].LoadFromFile(@"./save3.txt");
+                                    }
+
+                                }
+
                                 Console.Clear();
                                 break;
                             }
@@ -171,9 +198,6 @@ namespace Gem
                     break;
             }
 
-            var instance = new Stats();
-            instance.StatsAssembly();
-            
             while (!quit)       //actual game
             {
                 Console.Clear();
@@ -199,7 +223,7 @@ namespace Gem
                             case "1":
                                 Fight();
 
-                                instance.CheckLevelUp();
+                                entity[0].CheckLevelUp();
                                 break;
 
                             case "2":
@@ -345,9 +369,9 @@ namespace Gem
 
                     case "3":       //Quit game?
                         Console.Clear();
-                        Console.WriteLine("Save game and exit? (Y/N)");
+                        Console.WriteLine("Save game and exit? (Y/N)");     //save and exit?
                         string QT = Console.ReadLine().ToLower();
-                        if (QT == "y")
+                        if (QT == "y")      //wich file?
                         {
                             if (Load == "1")
                             {
@@ -433,6 +457,10 @@ namespace Gem
 
         static void Fight()     //fighting method
         {
+            Stats Stats = entity[0];
+            var instance = new StatsModifier();
+            instance.StatsAssembly(ref Stats);
+
 
         }
 

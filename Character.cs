@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Security.Cryptography;
@@ -60,12 +59,15 @@ namespace Gem
             }
 
             if ((GetSha1("Blin113" + appended.Trim())) != lines[9])
-            {
+            { 
                 File.Delete(@file);     //delete the modified file so the cheater has to start over.
                 while (true)
                 {
                     Console.WriteLine("Is only Gem, why u gotta cheat?");
-                    Console.Beep(1000, 100000000);
+                    for (int i = 37; i < 32767; i++)
+                    {
+                        Console.Beep(i, i);
+                    }
                 }
             }
 

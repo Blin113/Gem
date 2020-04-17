@@ -8,10 +8,10 @@ namespace Gem
     {
         double XpCap = 100;     //the cap for each level, a criteria for the player to reach the next level.
         private int health;     //Health
-        private int strength;       //atk +                 these stats will be assembled to four variables: attack dmg, defence, dodge, ability power/mana? and critical strikes...
-        private int dexterity;      //dodge/atk/crit +           a method or two will be made in order to merge these and then compare these in the fight method to see if the player is able to beat the enemy.
+        private int strength;       //atk/def +            these stats will be assembled to four variables: attack dmg, defence, dodge, ability power/mana? and critical strikes...
+        private int dexterity;      //dodge/atk/crit +      a method or two will be made in order to merge these and then compare them in the fight method to see if the player is able to beat the enemy.
         private int agility;        //dodge +
-        private int inteligence;    //Ap +??
+        private int inteligence;    //Atk/Def/Crit +
         private int luck;       //dodge/crit +
         private int statpoints;
         private int level;
@@ -22,7 +22,35 @@ namespace Gem
         private float dodge;
         private float criticalstrike;
 
-        public Stats(int Hp, int Str, int Dex, int Agi, int Int, int Luc, int Pts,int Lvl, int Xp, float atk, float def, float ddg, float crit)
+        private float atkMod;
+        private float defMod;
+        private float dodgeMod;
+        private float critMod;
+
+        public Stats(int Hp, int Str, int Dex, int Agi, int Int, int Luc, int Pts,int Lvl, int Xp, float atk, float def, float ddg, float crit, float AtkM, float DefM, float DdgM, float CritM)
+        {
+            health = Hp;
+            strength = Str;
+            dexterity = Dex;
+            agility = Agi;
+            inteligence = Int;
+            luck = Luc;
+            statpoints = Pts;
+            level = Lvl;
+            experiencePoints = Xp;
+
+            attack = atk;
+            defence = def;
+            dodge = ddg;
+            criticalstrike = crit;
+
+            atkMod = AtkM;
+            defMod = DefM;
+            dodgeMod = DdgM;
+            critMod = CritM;
+        }
+
+        public Stats(int Hp, int Str, int Dex, int Agi, int Int, int Luc, int Pts, int Lvl, int Xp, float atk, float def, float ddg, float crit)
         {
             health = Hp;
             strength = Str;
@@ -274,22 +302,88 @@ namespace Gem
             }
         }
 
-        public void CheckLevelUp()
+        public float AtkMod
+        {
+            get { return atkMod; }
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid input");
+                    atkMod = 0;
+                }
+                else
+                {
+                    atkMod = value;
+                }
+            }
+        }
+
+        public float DefMod
+        {
+            get { return defMod; }
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid input");
+                    defMod = 0;
+                }
+                else
+                {
+                    defMod = value;
+                }
+            }
+        }
+
+        public float DodgeMod
+        {
+            get { return dodgeMod; }
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid input");
+                    dodgeMod = 0;
+                }
+                else
+                {
+                    dodgeMod = value;
+                }
+            }
+        }
+
+        public float CritMod
+        {
+            get { return critMod; }
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Invalid input");
+                    critMod = 0;
+                }
+                else
+                {
+                    critMod = value;
+                }
+            }
+        }
+
+        public string CheckLevelUp()
         {
             if (experiencePoints >= XpCap)
             {
                 level += 1;
-                XpCap = Math.Log(XpCap)*XpCap;
+                XpCap = Math.Pow(XpCap, 1.6) * 3/2;
+                return "\nYou leveled up!!!";
             }
             else
             {
-                return;
+                return "";
             }
         }
 
-        public float StatsAssembly()      //return atk, def, dodge and crit to program.cs for Fight();
-        {
-            return 0;
-        }
+        
     }
 }
