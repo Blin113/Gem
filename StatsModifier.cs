@@ -11,7 +11,7 @@ namespace Gem
 
         }
 
-        public float StatsAssembly(ref Stats Stats)       //return atk, def, dodge and crit to program.cs for Fight();
+        public void StatsAssembly(ref Stats Stats)       //return atk, def, dodge and crit to program.cs for Fight();
         {
             float StrM = (Stats.Strength / 10) + 1;       //atk/def +
             float DexM = (Stats.Dexterity / 10) + 1;      //dodge/atk/crit/def +
@@ -28,8 +28,6 @@ namespace Gem
             Stats.Defence = 100 * Stats.DefMod;
             Stats.Dodge = 100 * Stats.DodgeMod;
             Stats.CriticalStrike = 100 * Stats.CritMod;
-
-            return 0;
         }
     }
 }

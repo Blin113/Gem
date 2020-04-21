@@ -370,12 +370,19 @@ namespace Gem
             }
         }
 
-        public string CheckLevelUp()
+        public string CheckLevelUp(ref Stats Stats)
         {
             if (experiencePoints >= XpCap)
             {
                 level += 1;
                 XpCap = Math.Pow(XpCap, 1.6) * 3/2;
+                
+                Math.Round(Stats.Health * 1.5);
+
+                int PtsMod = 10;
+                Stats.Statpoints += PtsMod;
+                PtsMod += 2;
+                
                 return "\nYou leveled up!!!";
             }
             else

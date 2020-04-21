@@ -26,7 +26,6 @@ namespace Gem
                                                 
                                             Press any key to start
 
-                                                     1337
             ";
 
 
@@ -203,7 +202,8 @@ namespace Gem
                 Console.Clear();
                 Console.WriteLine("1. Fight");
                 Console.WriteLine("2. Stats");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("3. Items(WIP)");     //Add after u git gud
+                Console.WriteLine("4. Exit");
                 string action = Console.ReadLine() + "";
 
                 switch (action)
@@ -220,13 +220,23 @@ namespace Gem
                         string Fightoptions = Console.ReadLine() + "";
                         switch (Fightoptions)
                         {
-                            case "1":
+                            case "1":   //Fighting case
+                                Stats Stats = entity[0];
                                 Fight();
 
-                                entity[0].CheckLevelUp();
+                                var instance = new Stats();
+                                instance.CheckLevelUp(ref Stats);
+                                
+                                Console.WriteLine("Current Xp: ");
+                                
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.Write(Stats.ExperiencePoints);
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                
+                                Console.ReadKey();
                                 break;
 
-                            case "2":
+                            case "2":       //Flee
                                 Console.ForegroundColor = ConsoleColor.DarkRed;
                                 Console.WriteLine("Opponent: COWARD!!!");
                                 Console.ForegroundColor = ConsoleColor.Black;
@@ -367,7 +377,11 @@ namespace Gem
                         }
                         break;
 
-                    case "3":       //Quit game?
+                    case "3":
+
+                        break;
+
+                    case "4":       //Quit game?
                         Console.Clear();
                         Console.WriteLine("Save game and exit? (Y/N)");     //save and exit?
                         string QT = Console.ReadLine().ToLower();
@@ -430,8 +444,6 @@ namespace Gem
             entity.Remove(entity[1]);
             Random random = new Random();
 
-            
-
             entity.Add(new Opponents(10, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
         }
 
@@ -458,8 +470,8 @@ namespace Gem
         static void Fight()     //fighting method
         {
             Stats Stats = entity[0];
-            var instance = new StatsModifier();
-            instance.StatsAssembly(ref Stats);
+            var instance2 = new StatsModifier();
+            instance2.StatsAssembly(ref Stats);
 
 
         }
