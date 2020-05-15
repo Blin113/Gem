@@ -83,7 +83,15 @@ namespace Gem
                             }
                             else
                             {
-                                entity.Add(new Player(10, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                if (entity.Count == 0)
+                                {
+                                    entity.Add(new Player(20, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                }
+                                else
+                                {
+                                    entity[0] = (new Player(20, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                }
+
                                 quit = false;
                                 Console.Clear();
                                 break;
@@ -106,7 +114,7 @@ namespace Gem
                                         entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
                                         entity[0].LoadFromFile(@"./save2.txt");
                                     }
-
+                                    
                                 }
 
                                 Console.Clear();
@@ -114,7 +122,15 @@ namespace Gem
                             }
                             else
                             {
-                                entity.Add(new Player(10, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                if (entity.Count == 0)
+                                {
+                                    entity.Add(new Player(20, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                }
+                                else
+                                {
+                                    entity[0] = (new Player(20, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                }
+
                                 quit = false;
                                 Console.Clear();
                                 break;
@@ -145,7 +161,15 @@ namespace Gem
                             }
                             else
                             {
-                                entity.Add(new Player(10, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                if (entity.Count == 0)
+                                {
+                                    entity.Add(new Player(20, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                }
+                                else
+                                {
+                                    entity[0] = (new Player(20, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+                                }
+
                                 quit = false;
                                 Console.Clear();
                                 break;
@@ -205,49 +229,102 @@ namespace Gem
                 Console.WriteLine("3. Items(WIP)");     //Add after u git gud
                 Console.WriteLine("4. Exit");
                 string action = Console.ReadLine() + "";
+                bool Over = false;
 
                 switch (action)
                 {
                     case "1":   //Fight
+                        
+                        if(Over == true)    //leave the fighting case if the fight is over
+                        {
+                            break;
+                        }
+
+                        CallOpponent(ref entity);
+                        Stats Stats = entity[0];    //Player stats
+                        Stats EStats = entity[1];   //Enemy stats
+
+                        int Maxhp = Stats.Health;   //Player maximum hp
+                        int EMaxhp = EStats.Health; //Enemy maximum hp
+
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine(OpponentPhrase());
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine("----------------------------------");
-                        Console.WriteLine("1. Fight");
-                        Console.WriteLine("2. Run");
-                        Console.WriteLine("3. Items(WIP)");     //Add after u git gud
-                        string Fightoptions = Console.ReadLine() + "";
-                        switch (Fightoptions)
+
+                        while (Stats.Health > 0 || EStats.Health > 0)
                         {
-                            case "1":   //Fighting case
-                                Stats Stats = entity[0];
-                                Fight();
+                            if (Over == true)       //leave the fighting case if the fight is over
+                            {
+                                goto case "1";
+                            }
 
-                                var instance = new Stats();
-                                instance.CheckLevelUp(ref Stats);
-                                
-                                Console.WriteLine("Current Xp: ");
-                                
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.Write(Stats.ExperiencePoints);
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                
-                                Console.ReadKey();
-                                break;
+                            Console.WriteLine("Your HP: " + Stats.Health);
+                            Console.WriteLine("Enemy HP: " + EStats.Health);
+                            Console.WriteLine("----------------------------------");
+                            Console.WriteLine("1. Fight");
+                            Console.WriteLine("2. Run");
+                            Console.WriteLine("3. Items(WIP)");     //Add after u git gud
 
-                            case "2":       //Flee
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine("Opponent: COWARD!!!");
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.ReadKey();
-                                break;
+                            string Fightoptions = Console.ReadLine() + "";
+                            switch (Fightoptions)
+                            {
+                                case "1":   //Fighting case
 
-                            default:
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine("Invalid option, press any key to continue");
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                break;
+                                    Fight(Stats, EStats);
+
+                                    if (EStats.Health <= 0 && Stats.Health > 0)
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("You have slain your enemy!");
+
+                                        var instance = new Stats();
+                                        Console.WriteLine(instance.CheckLevelUp(ref Stats));
+
+                                        Console.WriteLine("Current Xp: ");
+
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.Write(Stats.ExperiencePoints);  //exp gained
+                                        Console.ForegroundColor = ConsoleColor.Black;
+
+                                        Stats.Health = Maxhp;   //reset Player hp
+                                        EStats.Health = EMaxhp; //reset Enemy hp
+
+                                        Console.ReadKey();
+                                        Over = true;
+                                        break;
+                                    }
+                                    else if (Stats.Health <= 0)
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("You died, press any key to continue");
+
+                                        Stats.Health = Maxhp;   //reset Player hp
+                                        EStats.Health = EMaxhp; //reset Enemy hp
+
+                                        Console.ReadKey();
+                                        Over = true;
+                                        break;
+                                    }
+
+                                    Console.Clear();
+                                    break;
+
+                                case "2":       //Flee
+                                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                                    Console.WriteLine("Opponent: COWARD!!!");
+                                    Console.ForegroundColor = ConsoleColor.Black;
+                                    Console.ReadKey();
+                                    break;
+
+                                default:
+                                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                                    Console.WriteLine("Invalid option, press any key to continue");
+                                    Console.ForegroundColor = ConsoleColor.Black;
+                                    break;
+
+                            }
                         }
                         break;
 
@@ -378,7 +455,10 @@ namespace Gem
                         break;
 
                     case "3":
+                        Console.WriteLine("it seems you forgot your backpack at home sry.");
 
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
 
                     case "4":       //Quit game?
@@ -439,12 +519,14 @@ namespace Gem
             }
         }
 
-        static void Opponent(ref List<Character> entity)    //Enemy creation
+        static void CallOpponent(ref List<Character> entity)    //Enemy creation
         {
-            entity.Remove(entity[1]);
-            Random random = new Random();
+            if(entity.Count > 1)
+            {
+                entity.Remove(entity[1]);
+            }
 
-            entity.Add(new Opponents(10, 5, 5, 5, 5, 5, 10, 1, 0, 0, 0, 0, 0));
+            entity.Add(new Opponents(15, 3, 3, 3, 3, 3, 0, 1, 0, 0, 0, 0, 0));
         }
 
         static string OpponentPhrase()          //returns a phrase for the epicness of the battle
@@ -461,19 +543,65 @@ namespace Gem
             Ep.Add("A wild Bela has appeared");     //thx for help
             Ep.Add("A wild Firi has appeared");     //thx for help
             Ep.Add("A wild Måns has appeared");     //thx for help
+            Ep.Add("A wild Tim Tuvestam has appeared");     //thx for help
+            Ep.Add("A wild David Wernow has appeared");     //thx for help
 
             int i = random.Next(0, Ep.Count);
 
             return Ep[i];
         }
 
-        static void Fight()     //fighting method
+        static void Fight(Stats Stats, Stats EStats)     //fighting method
         {
-            Stats Stats = entity[0];
             var instance2 = new StatsModifier();
-            instance2.StatsAssembly(ref Stats);
+            instance2.StatsAssembly(ref Stats);     //player statsassembly
+            instance2.StatsAssembly(ref EStats);    //enemy statsassembly
 
+            int Crit = (int)Stats.CriticalStrike;
+            int MaxDamage = 0;
 
+            Random random = new Random();
+            int Rand = random.Next(1, 100);
+            if (Rand <= Crit)       //Do Damage
+            {
+                MaxDamage = (int)Stats.Attack * 2;
+            }
+            else
+            {
+                MaxDamage = (int)Stats.Attack;
+            }
+
+            if (Rand <= EStats.Dodge)
+            {
+                MaxDamage = 0;
+            }
+
+            int FinalDamageGiven = MaxDamage - ((int)EStats.Defence/5);
+            FinalDamageGiven = Math.Max(FinalDamageGiven, 0);
+
+            int ECrit = (int)EStats.CriticalStrike;
+            int EMaxDamage = 0;
+
+            Rand = random.Next(1, 100);
+            if (Rand <= ECrit)       //take Damage
+            {
+                EMaxDamage = (int)EStats.Attack * 2;
+            }
+            else
+            {
+                EMaxDamage = (int)EStats.Attack;
+            }
+
+            if (Rand <= EStats.Dodge)
+            {
+                EMaxDamage = 0;
+            }
+
+            int FinalDamageTaken = EMaxDamage - (int)(Stats.Defence * 0.5);
+            FinalDamageTaken = Math.Max(FinalDamageTaken, 0);
+
+            EStats.Health -= FinalDamageGiven;
+            Stats.Health -= FinalDamageTaken;
         }
 
         public List<Character> GetList(ref List<Character> entity)

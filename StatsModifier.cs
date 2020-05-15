@@ -13,11 +13,11 @@ namespace Gem
 
         public void StatsAssembly(ref Stats Stats)       //return atk, def, dodge and crit to program.cs for Fight();
         {
-            float StrM = (Stats.Strength / 10) + 1;       //atk/def +
-            float DexM = (Stats.Dexterity / 10) + 1;      //dodge/atk/crit/def +
-            float AgiM = (Stats.Agility / 10) + 1;        //dodge +
-            float IntM = (Stats.Inteligence / 10) + 1;    //Atk/Def/Crit +
-            float LucM = (Stats.Luck / 10) + 1;           //dodge/crit +
+            float StrM = (Stats.Strength / 100) + 1;       //atk/def +
+            float DexM = (Stats.Dexterity / 100) + 1;      //dodge/atk/crit/def +
+            float AgiM = (Stats.Agility / 100) + 1;        //dodge +
+            float IntM = (Stats.Inteligence / 100) + 1;    //Atk/Def/Crit +
+            float LucM = (Stats.Luck / 100) + 1;           //dodge/crit +
 
             Stats.AtkMod = 0.1f * StrM * DexM * IntM;
             Stats.DefMod = 0.1f * StrM * DexM * IntM;

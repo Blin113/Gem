@@ -66,7 +66,7 @@ namespace Gem
                     Console.WriteLine("Is only Gem, why u gotta cheat?");
                     for (int i = 37; i < 32767; i++)
                     {
-                        Console.Beep(i, i);
+                        Console.Beep(i, i);     //fuska inte med headset på!!!!!
                     }
                 }
             }

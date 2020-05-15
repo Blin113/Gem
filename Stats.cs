@@ -14,6 +14,7 @@ namespace Gem
         private int inteligence;    //Atk/Def/Crit +
         private int luck;       //dodge/crit +
         private int statpoints;
+        int PtsMod = 5;
         private int level;
         private int experiencePoints;
 
@@ -80,7 +81,6 @@ namespace Gem
             {
                 if (value < 0)
                 {
-                    Console.WriteLine("Invalid input");
                     health = 0;
                 }
                 else
@@ -372,18 +372,20 @@ namespace Gem
 
         public string CheckLevelUp(ref Stats Stats)
         {
-            if (experiencePoints >= XpCap)
+            Stats.ExperiencePoints += 100;
+
+            if (Stats.ExperiencePoints >= Stats.XpCap)
             {
-                level += 1;
-                XpCap = Math.Pow(XpCap, 1.6) * 3/2;
+                Stats.level += 1;
+                Stats.XpCap = Math.Pow(Stats.XpCap, 1.2) * 1.5;
                 
                 Math.Round(Stats.Health * 1.5);
 
-                int PtsMod = 10;
-                Stats.Statpoints += PtsMod;
-                PtsMod += 2;
                 
-                return "\nYou leveled up!!!";
+                Stats.Statpoints += Stats.PtsMod;
+                Stats.PtsMod += 2;
+                
+                return "You leveled up!";
             }
             else
             {
