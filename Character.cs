@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 
 namespace Gem
 {
-    class Character : Stats
+    class Character : Stats     //a class for all the elements in entity. Also encoding the palyer stats so you can't cheat.
     {
         public Character(int Hp, int Str, int Dex, int Agi, int Int, int Luc, int Pts, int Lvl, int Xp, float atk, float def, float ddg, float crit) : base(Hp, Str, Dex, Agi, Int, Luc, Pts, Lvl, Xp, atk, def, ddg, crit)
         {
@@ -32,12 +32,12 @@ namespace Gem
         public override string ToString()
         {
             string stats = Health.ToString() + "\n" + Strength.ToString() + "\n" + Dexterity.ToString() + "\n" + Agility.ToString() + "\n" + Inteligence.ToString() + "\n" + Luck.ToString() + "\n" + Statpoints.ToString() + "\n" + Level.ToString() + "\n" + ExperiencePoints.ToString();
-            string hash = GetSha1("Blin113" + stats);
+            string hash = GetSha1("Blin113" + stats);       //blin113 is just here to make sure you can't cheat without access to the code.
             stats += "\n" + hash;
             return stats;
         }
 
-        public void LoadFromFile(string file)
+        public void LoadFromFile(string file)       //what line holds what stat?
         {
             string[] lines = File.ReadAllLines(@file);
             Health = int.Parse(lines[0]);
@@ -58,7 +58,7 @@ namespace Gem
                 appended += "\n";
             }
 
-            if ((GetSha1("Blin113" + appended.Trim())) != lines[9])
+            if ((GetSha1("Blin113" + appended.Trim())) != lines[9])     //blin113 is just here to make sure you can't cheat without access to the code.
             { 
                 File.Delete(@file);     //delete the modified file so the cheater has to start over.
                 while (true)

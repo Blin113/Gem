@@ -6,8 +6,8 @@ namespace Gem
 {
     class Program
     {
-        static string Load;
-        static List<Character> entity = new List<Character>();
+        static string Load;     //for loading save files
+        static List<Character> entity = new List<Character>();      //creating the entity list where my enemies and the player stats/inventory will be stored
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Black;
@@ -26,10 +26,10 @@ namespace Gem
                                                 
                                             Press any key to start
 
-            ";
+            ";      //a nice little startup screen
 
 
-            Console.WriteLine(title);
+            Console.WriteLine(title);       //prints the startup screen/text
             Console.ReadKey();
             //Console.ResetColor();
 
@@ -75,7 +75,7 @@ namespace Gem
                                         entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
                                         entity[0].LoadFromFile(@"./save1.txt");
                                     }
-                                        
+
                                 }
 
                                 Console.Clear();
@@ -114,7 +114,7 @@ namespace Gem
                                         entity.Add(new Player(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
                                         entity[0].LoadFromFile(@"./save2.txt");
                                     }
-                                    
+
                                 }
 
                                 Console.Clear();
@@ -176,12 +176,12 @@ namespace Gem
                             }
 
                         default:
-                            Console.WriteLine("Invalid Save File");     //användaren skrev fel
+                            Console.WriteLine("Invalid Save File.");     //användaren skrev fel
                             Console.ReadKey();
                             Console.Clear();
                             Main(null);
                             break;
-                            
+
                     }
 
                     Console.Clear();
@@ -226,7 +226,7 @@ namespace Gem
                 Console.Clear();
                 Console.WriteLine("1. Fight");
                 Console.WriteLine("2. Stats");
-                Console.WriteLine("3. Items(WIP)");     //Add after u git gud
+                Console.WriteLine("3. Inventory");      //hinner tyvärr inte göra klart items då jag måste lämna in projektet.
                 Console.WriteLine("4. Exit");
                 string action = Console.ReadLine() + "";
                 bool Over = false;
@@ -234,8 +234,8 @@ namespace Gem
                 switch (action)
                 {
                     case "1":   //Fight
-                        
-                        if(Over == true)    //leave the fighting case if the fight is over
+
+                        if (Over == true)    //leave the fighting case if the fight is over
                         {
                             break;
                         }
@@ -249,7 +249,7 @@ namespace Gem
 
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine(OpponentPhrase());
+                        Console.WriteLine(OpponentPhrase());        //who you are fighting
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine("----------------------------------");
 
@@ -265,43 +265,43 @@ namespace Gem
                             Console.WriteLine("----------------------------------");
                             Console.WriteLine("1. Fight");
                             Console.WriteLine("2. Run");
-                            Console.WriteLine("3. Items(WIP)");     //Add after u git gud
+                            Console.WriteLine("3. Inventory");     //hinner tyvärr inte göra klart items då jag måste lämna in projektet.
 
                             string Fightoptions = Console.ReadLine() + "";
                             switch (Fightoptions)
                             {
                                 case "1":   //Fighting case
 
-                                    Fight(Stats, EStats);
+                                    Fight(Stats, EStats);       //take and deal damage...(see Fight();)
 
-                                    if (EStats.Health <= 0 && Stats.Health > 0)
+                                    if (EStats.Health <= 0 && Stats.Health > 0)     //if you kill your enemy...
                                     {
                                         Console.Clear();
                                         Console.WriteLine("You have slain your enemy!");
 
                                         var instance = new Stats();
-                                        Console.WriteLine(instance.CheckLevelUp(ref Stats));
+                                        Console.WriteLine(instance.CheckLevelUp(ref Stats, ref Maxhp, ref EMaxhp));
 
                                         Console.WriteLine("Current Xp: ");
 
                                         Console.ForegroundColor = ConsoleColor.Green;
-                                        Console.Write(Stats.ExperiencePoints);  //exp gained
+                                        Console.Write(Stats.ExperiencePoints);      //exp gained
                                         Console.ForegroundColor = ConsoleColor.Black;
 
-                                        Stats.Health = Maxhp;   //reset Player hp
-                                        EStats.Health = EMaxhp; //reset Enemy hp
+                                        Stats.Health = Maxhp;       //reset Player hp
+                                        EStats.Health = EMaxhp;     //reset Enemy hp
 
                                         Console.ReadKey();
                                         Over = true;
                                         break;
                                     }
-                                    else if (Stats.Health <= 0)
+                                    else if (Stats.Health <= 0)     //if you die...
                                     {
                                         Console.Clear();
                                         Console.WriteLine("You died, press any key to continue");
 
-                                        Stats.Health = Maxhp;   //reset Player hp
-                                        EStats.Health = EMaxhp; //reset Enemy hp
+                                        Stats.Health = Maxhp;       //reset Player hp
+                                        EStats.Health = EMaxhp;     //reset Enemy hp
 
                                         Console.ReadKey();
                                         Over = true;
@@ -311,10 +311,21 @@ namespace Gem
                                     Console.Clear();
                                     break;
 
-                                case "2":       //Flee
+                                case "2":       //Flee...
                                     Console.ForegroundColor = ConsoleColor.DarkRed;
                                     Console.WriteLine("Opponent: COWARD!!!");
                                     Console.ForegroundColor = ConsoleColor.Black;
+                                    Console.ReadKey();
+
+                                    Stats.Health = Maxhp;   //reset Player hp
+                                    EStats.Health = EMaxhp; //reset Enemy hp
+                                    Over = true;
+                                    break;
+
+                                case "3":       //hinner tyvärr inte göra klart items då jag måste lämna in projektet.
+                                    //var instance3 = new Items();
+                                    //Inventory(ref Items);    //displays your inventory
+
                                     Console.ReadKey();
                                     break;
 
@@ -328,9 +339,9 @@ namespace Gem
                         }
                         break;
 
-                    case "2":   //Player stats      Stat config
+                    case "2":   //Player stats      Stat config add stats from your statpoints to stats
                         Console.Clear();
-                        Console.WriteLine("Hp: " + entity[0].Health);
+                        Console.WriteLine("Hp: " + entity[0].Health);       //skriver ut stats för health osv
                         Console.WriteLine("Str: " + entity[0].Strength);
                         Console.WriteLine("Dex: " + entity[0].Dexterity);
                         Console.WriteLine("Agi: " + entity[0].Agility);
@@ -454,7 +465,7 @@ namespace Gem
                         }
                         break;
 
-                    case "3":
+                    case "3":       //hinner tyvärr inte göra klart items då jag måste lämna in projektet.
                         Console.WriteLine("it seems you forgot your backpack at home sry.");
 
                         Console.ReadKey();
@@ -467,29 +478,29 @@ namespace Gem
                         string QT = Console.ReadLine().ToLower();
                         if (QT == "y")      //wich file?
                         {
-                            if (Load == "1")
+                            if (Load == "1")        //save to load 1...
                             {
                                 string[] lines = { entity[0].ToString() };
                                 System.IO.File.WriteAllLines(@"./save1.txt", lines);
                             }
-                            else if (Load == "2")
+                            else if (Load == "2")        //save to load 2...
                             {
                                 string[] lines = { entity[0].ToString() };
                                 System.IO.File.WriteAllLines(@"./save2.txt", lines);
                             }
-                            else if (Load == "3")
+                            else if (Load == "3")        //save to load 3...
                             {
                                 string[] lines = { entity[0].ToString() };
                                 System.IO.File.WriteAllLines(@"./save3.txt", lines);
                             }
                             else
                             {
-                                Console.WriteLine("What did you do this time?");        //how does one fuck up this bad?
+                                Console.WriteLine("What did you do this time?");        //någon har lyckats komma till den här raden... på nått sätt
                                 Console.ReadKey();
                                 Console.Clear();
                                 break;
                             }
-                            
+
                             Console.Clear();
                             Main(null);
                             break;
@@ -507,7 +518,7 @@ namespace Gem
                             Console.ReadKey();
                             Console.Clear();
                         }
-                        break;      
+                        break;
 
                     default:
                         Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -521,12 +532,12 @@ namespace Gem
 
         static void CallOpponent(ref List<Character> entity)    //Enemy creation
         {
-            if(entity.Count > 1)
+            if (entity.Count > 1)       //tar bort fienden om det finns någon.
             {
                 entity.Remove(entity[1]);
             }
 
-            entity.Add(new Opponents(15, 3, 3, 3, 3, 3, 0, 1, 0, 0, 0, 0, 0));
+            entity.Add(new Opponents(15, 3, 3, 3, 3, 3, 0, 1, 0, 0, 0, 0, 0));      //skapar fienden
         }
 
         static string OpponentPhrase()          //returns a phrase for the epicness of the battle
@@ -539,6 +550,9 @@ namespace Gem
             Ep.Add("A wild painter has appeared");
             Ep.Add("A wild god has appeared");
             Ep.Add("A wild punk has appeared");
+            Ep.Add("A wild martial artist has appeared");
+            Ep.Add("A wild construction worker has appeared");
+            Ep.Add("A wild penguin has appeared");
             Ep.Add("A wild worker has appeared");
             Ep.Add("A wild Bela has appeared");     //thx for help
             Ep.Add("A wild Firi has appeared");     //thx for help
@@ -576,7 +590,7 @@ namespace Gem
                 MaxDamage = 0;
             }
 
-            int FinalDamageGiven = MaxDamage - ((int)EStats.Defence/5);
+            int FinalDamageGiven = MaxDamage - ((int)EStats.Defence / 5);
             FinalDamageGiven = Math.Max(FinalDamageGiven, 0);
 
             int ECrit = (int)EStats.CriticalStrike;
@@ -600,13 +614,15 @@ namespace Gem
             int FinalDamageTaken = EMaxDamage - (int)(Stats.Defence * 0.5);
             FinalDamageTaken = Math.Max(FinalDamageTaken, 0);
 
-            EStats.Health -= FinalDamageGiven;
-            Stats.Health -= FinalDamageTaken;
+            EStats.Health -= FinalDamageGiven;      //subtraherar FinalDamageGiven från fiendens HP
+            Stats.Health -= FinalDamageTaken;        //subtraherar FinalDamageTaken från spelarens HP
         }
 
-        public List<Character> GetList(ref List<Character> entity)
+        static void Inventory(ref Items Items)        //Invetory, används aldrig då jag inte gjort klart den.
         {
-            return entity;
+            List<Items> HealthPotions = new List<Items>();
+
         }
+
     }
 }

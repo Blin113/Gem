@@ -6,7 +6,7 @@ namespace Gem
 {
     class Stats
     {
-        double XpCap = 100;     //the cap for each level, a criteria for the player to reach the next level.
+        double XpCap = 100;     //the cap for each level, a criteria for the player to reach the next level. used in the levelup method.
         private int health;     //Health
         private int strength;       //atk/def +            these stats will be assembled to four variables: attack dmg, defence, dodge, ability power/mana? and critical strikes...
         private int dexterity;      //dodge/atk/crit +      a method or two will be made in order to merge these and then compare them in the fight method to see if the player is able to beat the enemy.
@@ -14,7 +14,7 @@ namespace Gem
         private int inteligence;    //Atk/Def/Crit +
         private int luck;       //dodge/crit +
         private int statpoints;
-        int PtsMod = 5;
+        int PtsMod = 5;     //behöver inte vara private då vi använder den i levelup metoden.
         private int level;
         private int experiencePoints;
 
@@ -370,20 +370,19 @@ namespace Gem
             }
         }
 
-        public string CheckLevelUp(ref Stats Stats)
+        public string CheckLevelUp(ref Stats Stats, ref int Maxhp, ref int EMaxhp)     //om spelarens xp överstiger eller är lika med xpcap levlar man och får vissa bonusar.
         {
-            Stats.ExperiencePoints += 100;
+            Stats.ExperiencePoints += 100;      //ge xp
 
             if (Stats.ExperiencePoints >= Stats.XpCap)
             {
                 Stats.level += 1;
-                Stats.XpCap = Math.Pow(Stats.XpCap, 1.2) * 1.5;
+                Stats.XpCap = Math.Pow(Stats.XpCap, 1.2) * 1.5;     //xpcap höjs
                 
-                Math.Round(Stats.Health * 1.5);
+                Maxhp += 5;      //öka spelarens maxhp
 
-                
-                Stats.Statpoints += Stats.PtsMod;
-                Stats.PtsMod += 2;
+                Stats.Statpoints += Stats.PtsMod;       //ge statpoints
+                Stats.PtsMod += 2;      
                 
                 return "You leveled up!";
             }

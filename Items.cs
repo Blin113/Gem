@@ -2,14 +2,26 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gem
+namespace Gem       //hinner tyvärr inte göra klart items då jag måste lämna in projektet.
 {
-    class Items
+    enum ItemState
     {
-        enum ItemState
+        equipped,
+        active
+    }
+
+    class Items : Stats
+    {
+        private int damage;
+        private int defence;
+        private int healing;
+
+        public Items(int dmg, int defe, int reg)
         {
-            unequipped = 0,
-            equipped = 1
+            damage = dmg;
+            defence = defe;
+            healing = reg;
         }
     }
+
 }
